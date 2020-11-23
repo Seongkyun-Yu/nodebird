@@ -2,4 +2,4 @@ const Home = () => {
   return <div>Hello, Next!</div>;
 };
 
-export default HTMLFormElement;
+export default Home;
