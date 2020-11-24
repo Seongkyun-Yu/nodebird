@@ -26,7 +26,23 @@ const AppLayout = ({ children }) => {
           </Link>
         </Menu.Item>
       </Menu>
-      {children}
+      <Row gutter={8}>
+        <Col xs={24} md={6}>
+          왼쪽메뉴{" "}
+        </Col>
+        <Col xs={24} md={12}>
+          {children}{" "}
+        </Col>
+        <Col xs={24} md={6}>
+          <a
+            href="https://www.zerocho.com"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Made by Seongkyun
+          </a>
+        </Col>
+      </Row>
     </div>
   );
 };
