@@ -6,17 +6,20 @@
       "jsx": true
     }
   },
-  "env":{
+  "env": {
     "browser": true,
-    "node": true,
-    "es6": true
+    "node": true
   },
   "extends": [
-    "eslint:recommend",
+    "eslint:recommended",
     "plugin:react/recommended"
   ],
   "plugins": [
     "import",
     "react-hooks"
-  ]
+  ],
+  "rules": {
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/anchor-is-valid": "off"
+  }
 }
