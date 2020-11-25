@@ -8,7 +8,9 @@ const Profile = () => (
       <title>NodeBird | 프로필</title>
     </Head>
     <AppLayout>
-      <div>내 프로필</div>
+      <NicknameEditForm />
+      <FollowList header="팔로잉 목록" />
+      <FollowList header="팔로워 목록" />
     </AppLayout>
   </>
 );
