@@ -7,7 +7,11 @@ const ButtonWrapper = styled.div`
   margin-top: 10px;
 `;
 
-const LoginForm = () => {
+const FormWrapper = styled(Form)`
+  padding: 10px;
+`;
+
+const LoginForm = ({ setIsLoggedIn }) => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,8 +23,17 @@ const LoginForm = () => {
     setPassword(e.target.value);
   }, []);
 
+  const onSubmitForm = useCallback(
+    (e) => {
+      // antd에선 이미 prevent default 처리 돼있음
+      console.log(id, password);
+      setIsLoggedIn(true);
+    },
+    [id, password]
+  );
+
   return (
-    <Form>
+    <FormWrapper onFinish={onSubmitForm}>
       <div>
         <label htmlFor="user-id">아이디</label>
         <br />
@@ -34,6 +47,7 @@ const LoginForm = () => {
           value={password}
           onChange={onChangePassword}
           required
+          type="password"
         />
       </div>
       <ButtonWrapper>
@@ -46,7 +60,7 @@ const LoginForm = () => {
           </a>
         </Link>
       </ButtonWrapper>
-    </Form>
+    </FormWrapper>
   );
 };
 
