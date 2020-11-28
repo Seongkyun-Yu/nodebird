@@ -2,6 +2,8 @@ import React, { useCallback, useState } from "react";
 import { Form, Input, Button } from "antd";
 import Link from "next/link";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { loginAction } from "../reducer";
 
 const ButtonWrapper = styled.div`
   margin-top: 10px;
@@ -11,7 +13,8 @@ const FormWrapper = styled(Form)`
   padding: 10px;
 `;
 
-const LoginForm = ({ setIsLoggedIn }) => {
+const LoginForm = () => {
+  const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
 
@@ -27,7 +30,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
     (e) => {
       // antd에선 이미 prevent default 처리 돼있음
       console.log(id, password);
-      setIsLoggedIn(true);
+      dispatch(loginAction({ id, password }));
     },
     [id, password]
   );
