@@ -13,9 +13,9 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 
 import CommentForm from "./CommentForm";
-import PostCardContent from "./PostCardContent";
+// import PostCardContent from "./PostCardContent";
 import PostImages from "./PostImages";
-import FollowButton from "./FollowButton";
+// import FollowButton from "./FollowButton";
 
 const CardWrapper = styled.div`
   margin-bottom: 20px;
@@ -23,7 +23,7 @@ const CardWrapper = styled.div`
 
 const PostCard = ({ post }) => {
   const [commentFormOpened, setCommentFormOpened] = useState(false);
-  const id = useSelector((state) => state.user.me && state.user.me.id);
+  const id = useSelector((state) => state.user.me?.id);
 
   const [liked, setLiked] = useState(false);
 
@@ -69,12 +69,12 @@ const PostCard = ({ post }) => {
             <EllipsisOutlined />
           </Popover>,
         ]}
-        extra={<FollowButton post={post} />}
+        // extra={<FollowButton post={post} />}
       >
         <Card.Meta
           avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
           title={post.User.nickname}
-          description={<PostCardContent postData={post.content} />}
+          // description={<PostCardContent postData={post.content} />}
         />
       </Card>
       {commentFormOpened && (
