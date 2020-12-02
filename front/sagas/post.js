@@ -23,8 +23,8 @@ import {
   REMOVE_POST_FAILURE,
   REMOVE_POST_REQUEST,
   REMOVE_POST_SUCCESS,
-} from "../reducers/post";
-import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "../reducers/user";
+} from "../reducer/post";
+import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "../reducer/user";
 
 function loadPostsAPI(data) {
   return axios.get("/api/posts", data);

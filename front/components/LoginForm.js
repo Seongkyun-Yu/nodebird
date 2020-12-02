@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { Form, Input, Button } from "antd";
 import Link from "next/link";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../reducer/user";
 
 const ButtonWrapper = styled.div`
@@ -17,6 +17,7 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const { isLoggingIn } = useSelector((state) => state.user);
 
   const onChangeId = useCallback((e) => {
     setId(e.target.value);
@@ -54,7 +55,7 @@ const LoginForm = () => {
         />
       </div>
       <ButtonWrapper>
-        <Button type="primary" htmlType="submit" loading={false}>
+        <Button type="primary" htmlType="submit" loading={isLoggingIn}>
           로그인
         </Button>
         <Link href="/signup">
