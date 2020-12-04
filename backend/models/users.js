@@ -20,6 +20,20 @@ module.exports = (sequelize, DataTypes) => {
     },
     { charset: "utf8", collate: "utf8_general_ci" } // 한글저장
   );
-  User.associate = (db) => {};
+  User.associate = (db) => {
+    db.User.hasMany(db.Post); // 유저는 포스트를 여러개 가지고 있다
+    db.User.hasMany(db.Commnet);
+    db.User.belongsToMany(db.Post, { through: "Like", as: "Liked" }); // 다대다, through는 중간 테이블 이름, as 뒤에 있는 것으로 LikedId 컬럼이 생긴다
+    db.User.belongsToMany(db.User, {
+      through: "Follow",
+      as: "Followers",
+      foreignKey: "followIngId",
+    });
+    db.User.belongsToMany(db.User, {
+      through: "Follow",
+      as: "Followings",
+      foreignKey: "followId",
+    });
+  };
   return User;
 };
