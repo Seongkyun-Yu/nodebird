@@ -24,12 +24,13 @@ module.exports = () => {
           const result = await bcrypt.compare(password, user.password);
 
           if (result) {
+            console.log("LocalStrategy, 로그인 성공 ", result);
             return done(null, user);
           }
 
           return done(null, false, { reason: "비밀번호가 틀렸습니다" });
         } catch (error) {
-          console.error(error);
+          console.error("LocalStrategy 에러", error);
           return done(error); // 서버에러 처리
         }
       }
