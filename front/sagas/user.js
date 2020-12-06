@@ -67,6 +67,7 @@ function signUpAPI(data) {
 
 function* signUp(action) {
   try {
+    console.log(action.data);
     const result = yield call(signUpAPI, action.data);
     console.log(result);
     yield put({
