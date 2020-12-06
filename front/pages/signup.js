@@ -15,10 +15,24 @@ const Signup = () => {
   const [termError, setTermError] = useState(false);
 
   const [email, onChangeEmail] = useInput("");
-  const [nick, onChangeNick] = useInput("");
+  const [nickname, onChangeNick] = useInput("");
   const [password, onChangePassword] = useInput("");
   const dispatch = useDispatch();
   const { isSigningUp, me } = useSelector((state) => state.user);
+  const { signUpLoading, signUpDone, signUpError } = useSelector(
+    (state) => state.user
+  );
+
+  useEffect(() => {
+    if (signUpDone) {
+      Router.push("/");
+    }
+  });
+  useEffect(() => {
+    if (signUpError) {
+      alert(signUpError);
+    }
+  });
 
   useEffect(() => {
     if (me) {
@@ -39,7 +53,7 @@ const Signup = () => {
       data: {
         email,
         password,
-        nick,
+        nickname,
       },
     });
   }, [email, password, passwordCheck, term]);
@@ -78,7 +92,7 @@ const Signup = () => {
           <br />
           <Input
             name="user-nick"
-            value={nick}
+            value={nickname}
             required
             onChange={onChangeNick}
           />
