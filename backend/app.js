@@ -4,14 +4,20 @@ const cors = require("cors");
 const postRouter = require("./routes/post");
 const userRouter = require("./routes/user");
 const db = require("./models");
+const passportConfig = require("./passport");
+
 const app = express();
 
+// DB 설정
 db.sequelize
   .sync()
   .then(() => {
     console.log("db 연결 성공");
   })
   .catch(console.error);
+
+// passport 설정
+passportConfig();
 
 app.use(
   cors({
