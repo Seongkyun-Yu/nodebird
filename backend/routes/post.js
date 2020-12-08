@@ -1,18 +1,34 @@
 const express = require("express");
 
-const { Post, Comment } = require("../models");
+const { Post, Image, Comment, User } = require("../models");
 const { isLoggedIn } = require("./middlewares");
 
 const router = express.Router();
 
 router.post("/", isLoggedIn, async (req, res, next) => {
   // 일단 한번 로그인하면 라우터 접근 전에 deserialize 처리함 그래서 req.user 접근 가능
+  console.log(req.body.content);
   try {
     const post = await Post.create({
       content: req.body.content,
       UserId: req.user.id,
     });
-    res.status(201).json(post);
+
+    const fullPost = await Post.findOne({
+      where: { id: post.id },
+      include: [
+        {
+          model: Image,
+        },
+        {
+          model: Comment,
+        },
+        {
+          model: User,
+        },
+      ],
+    });
+    res.status(201).json(fullPost);
   } catch (error) {
     console.error(error);
     next(error);
