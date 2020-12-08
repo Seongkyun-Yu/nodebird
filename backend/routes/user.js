@@ -2,11 +2,12 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 
-const { User } = require("../models");
+const { User, Post } = require("../models");
+const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 
 const router = express.Router();
 
-router.post("/login", (req, res, next) => {
+router.post("/login", isNotLoggedIn, (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) {
       console.error("패스포트 인증 에러", err);
@@ -24,12 +25,33 @@ router.post("/login", (req, res, next) => {
         return next(loginErr);
       }
       console.log("로그인 성공", user);
-      return res.status(200).json(user);
+      const fullUserWithoutPassword = await User.findOne({
+        where: { id: user.id },
+        //attributes: ['id', 'nickname', 'email'], // db에서 이것만 가져오겠다
+        attributes: {
+          exclude: ["password"], // password 빼고 다
+        },
+        include: [
+          // 다른 테이블과 합치기
+          {
+            model: Post,
+          },
+          {
+            model: User,
+            as: "Followings",
+          },
+          {
+            model: User,
+            as: "Followers",
+          },
+        ],
+      });
+      return res.status(200).json(fullUserWithoutPassword);
     });
   })(req, res, next);
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", isNotLoggedIn, async (req, res, next) => {
   // POST /user
   try {
     const exUser = await User.findOne({
@@ -55,7 +77,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.post("/user/logout", (req, res, next) => {
+router.post("/logout", isLoggedIn, (req, res, next) => {
   req.logout();
   req.session.destroy();
   res.send("ok");
