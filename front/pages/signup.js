@@ -25,7 +25,7 @@ const Signup = () => {
 
   useEffect(() => {
     if (signUpDone) {
-      Router.push("/");
+      Router.replace("/");
     }
   });
   useEffect(() => {
@@ -35,9 +35,8 @@ const Signup = () => {
   });
 
   useEffect(() => {
-    if (me) {
-      alert("로그인했으니 메인페이지로 이동합니다.");
-      Router.push("/");
+    if (me && me.id) {
+      Router.replace("/"); // 히스토리 기록 지우고 이동
     }
   }, [me && me.id]);
 
