@@ -134,7 +134,9 @@ const reducer = (state = initialState, action) =>
       case REMOVE_POST_SUCCESS:
         draft.removePostLoading = false;
         draft.removePostDone = true;
-        draft.mainPosts = draft.mainPosts.filter((v) => v.id !== action.data);
+        draft.mainPosts = draft.mainPosts.filter(
+          (v) => v.id !== action.data.PostId
+        );
         break;
       case REMOVE_POST_FAILURE:
         draft.removePostLoading = false;
@@ -151,17 +153,6 @@ const reducer = (state = initialState, action) =>
         draft.addCommentLoading = false;
         draft.addCommentDone = true;
         break;
-        // const postIndex = state.mainPosts.findIndex((v) => v.id === action.data.postId);
-        // const post = { ...state.mainPosts[postIndex] };
-        // post.Comments = [dummyComment(action.data.content), ...post.Comments];
-        // const mainPosts = [...state.mainPosts];
-        // mainPosts[postIndex] = post;
-        // return {
-        //   ...state,
-        //   mainPosts,
-        //   addCommentLoading: false,
-        //   addCommentDone: true,
-        // };
       }
       case ADD_COMMENT_FAILURE:
         draft.addCommentLoading = false;
